@@ -1,3 +1,16 @@
+# The problem
+
+XState is __not__ strongly and soundly typed and offers very limited support for type-guarding against internal inconsistency, making scaling/using/navigating/reasoning-about big schemas potentially problematic and painful (machine-implementation is mostly unaware of its internal workings):
+
+- `createMachine' options` config is disconnected from its machine' `schema` and is unable to suggest which `actions`, `guards`, `activities`, etc. a user has to implement to create a working instance.
+- `matches` tool is disconnected from its machine' `schema` and is unable to suggest which states paths are available to match against.
+- Machine' `schema` is limited to state-taxonomy and does not model events/actions/transitions, etc.
+- There are no support for `Map<State, Event>`typings (restricting event variant to a state node).
+- There are no support for `Map<Event, Transition>` typings (restricting transition variant to a state node)
+- There are no `Map<Event, TransitionTargetSet>` typings to guard against targeting non-existent states.
+
+# The solution (wip)
+
 ```typescript
 /**
  * Atoms to generate exhaustive sound schema typings
